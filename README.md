@@ -46,13 +46,13 @@ Use the Ruby script:
 
 ## Demo output 
 
-This repo has two files of example demo output JSON text:
+This repo has examples of demo output JSON text:
 
-  1. `demo-output.json` -- this is actual output.
+  1. `demo-output.json` - this is actual output.
 
-  2. `demo-output-with-formatting.json` -- formatting for humans to read.
+  2. `demo-output-with-formatting.json` - formatting for humans to read.
 
-  3. `demo-output-with-filters.json` -- example of post-processing filters using `jq`.
+  3. `demo-output-with-filters.json` - example of post-processing filters using `jq`.
 
 
 ## Location
