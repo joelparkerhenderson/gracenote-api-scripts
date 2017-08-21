@@ -52,7 +52,7 @@ This repo has examples of demo output JSON text:
 
   2. `demo-output-with-formatting.json` - formatting for humans to read.
 
-  3. `demo-output-with-filters.json` - example of post-processing filters using the `jq` command; see below for info.
+  3. `demo-output-with-filtering.json` - example of post-processing filters using the `jq` command; see below for info.
 
 
 ## Location
