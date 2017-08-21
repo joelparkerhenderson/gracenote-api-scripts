@@ -52,6 +52,8 @@ This repo has two files of example demo output JSON text:
 
   2. `demo-output-with-formatting.json` -- formatting for humans to read.
 
+  3. `demo-output-with-filters.json` -- example of post-processing filters using `jq`.
+
 
 ## Location
 
@@ -83,5 +85,49 @@ If you get error messages about API rate limiting:
   * Try waiting a minute then try just 1 call.
 
 If you need more help, please open an issue and we'll take a look.
+
+
+## How to filter JSON with `jq`
+
+One way to filter JSON and format it is to use the `jq` command.
+
+To learn `jq` please see https://stedolan.github.io/jq/
+
+For example, if we care most about showtims, and not about the movie content,
+then we can use the `jq` command to delete many of the JSON fields.
+
+Example:
+
+    cat demo-output.json | 
+    jq 'del(.[] | 
+    	.advisories,
+    	.animation,
+    	.audience,
+    	.descriptionLang,
+    	.directors,
+    	.entityType,
+    	.genres,
+    	.longDescription,
+    	.officialUrl,
+    	.preferredImage,
+    	.qualityRating,
+    	.ratings,
+    	.releaseDate,
+    	.releaseYear,
+    	.runTime,
+    	.shortDescription,
+    	.subType,
+    	.titleLang,
+    	.topCast,
+		.showtimes[].barg,
+		.showtimes[].quals,
+		.showtimes[].ticketURI
+    	)'
+
+To see the result, see the file `demo-output-with-filtering.json`.
+
+The filtering saves approximately half the data size.
+
+
 
 
