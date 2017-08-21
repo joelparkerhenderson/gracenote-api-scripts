@@ -40,7 +40,6 @@ params = {
 }
 
 uri.query = URI.encode_www_form(params)
-puts uri.to_s
 
 response = Net::HTTP.get_response(uri)
 
