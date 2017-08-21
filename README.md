@@ -1,17 +1,20 @@
-# Demo of the Gracenote API to get movies and showtimes
+# Demo of the Gracenote API to get movies and showings
 
 This demo connects to the Gracenote API to get a list of movie showings.
 
 The Gracenote API provides URIs that looks like this:
 
-    http://data.tmsapi.com/v1.1/movies/showings?
-    api_key=tc7uqt2rvrygddhszep6zuvs&zip=10017
+    http://data.tmsapi.com/v1.1/movies/showings
+    ?api_key=tc7uqt2rvrygddhszep6zuvs
+    &zip=10017
+    &startDate=2017-08-01
 
 The URI is a typical RESTful method with these pieces:
 
-  * Entry point at http://data.tmsapi.com
-  * Semantic version number 1.1
-  * Query string with the API key and filter.
+  * Entry point "http://data.tmsapi.com"
+  * Semantic version number "v1.1"
+  * RESTful nested method "movies/showings"
+  * Query string with the API key and filters.
 
 
 ## Usage
@@ -24,6 +27,14 @@ Get your own Gracenote API key:
 
   3. Obtain your own free API key for the free public plan.
 
+Optionally verify that your API key works:
+
+  1. Try the `curl` command or `wget` command.
+
+  2. Example: `curl 'http://data.tmsapi.com/v1.1/movies/showings?api_key=tc7uqt2rvrygddhszep6zuvs&zip=10017&startDate=2017-08-01'`
+
+  3. The demo output is JSON text of the showings.
+
 Use the Ruby script:
 
   1. Change the demo API key to your own API key.
@@ -33,9 +44,18 @@ Use the Ruby script:
   3. The output is typical JSON text.
 
 
+## Demo output 
+
+This repo has two files of example demo output JSON text:
+
+  1. `demo-output.json` -- this is actual output.
+
+  2. `demo-output-with-formatting.json` -- formatting for humans to read.
+
+
 ## Location
 
-The API needs the movie showtimes request to provide a location, 
+The API needs the movies showings request to provide a location, 
 by using a U.S. zip (a.k.a. postal code) or latitude and longitude.
 
 This demo uses the location of New York City Grand Central Station,
