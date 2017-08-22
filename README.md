@@ -2,7 +2,9 @@
 
 This demo connects to the Gracenote API to get a list of movie showings.
 
-The Gracenote API provides URIs that looks like this:
+To start, please see the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
+
+The API provides URIs that look like this:
 
     http://data.tmsapi.com/v1.1/movies/showings
     ?api_key=tc7uqt2rvrygddhszep6zuvs
