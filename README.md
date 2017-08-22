@@ -47,16 +47,7 @@ Use the Ruby script:
 
   3. The output is typical JSON text.
 
-
-## Demo output 
-
-This repo has examples of demo output JSON text:
-
-  1. `demo-output.json` - this is actual output.
-
-  2. `demo-output-with-formatting.json` - formatting for humans to read.
-
-  3. `demo-output-with-filtering.json` - example of post-processing filters using the `jq` command; see below for info.
+To see example output, view the file `demo-output.json`, which we've formatted for readability.
 
 
 ## Location
@@ -91,62 +82,26 @@ If you get error messages about API rate limiting:
 If you need more help, please open an issue and we'll take a look.
 
 
-## How to filter JSON with `jq`
+## How to filter JSON
 
 One way to filter JSON and format it is to use the `jq` command.
 
 To learn `jq` please see https://stedolan.github.io/jq/
 
-These examples show how to filter the data various ways.
-
-Filter by movie title:
-
-    cat demo-output.json | 
-    jq '.[] | 
-      select(.title=="Wonder Woman")
-    '
-
-Filter to get the showtimes list:
+Example to filter by movie title and theatre id, and print just the date-time entries:
 
     cat demo-output.json | 
     jq '.[] 
       | select(.title=="Wonder Woman") 
       | .showtimes[] 
-    ' 
-
-Filter by theatre id:
-
-    cat demo-output.json | 
-    jq -r '.[] 
-      | select(.title=="Wonder Woman") 
-      | .showtimes[] 
-      | select(.theatre.id=="7503") 
-    ' 
-
-Filter to get the dateTime entries:
-
-    cat demo-output.json | 
-    jq -r '.[] 
-      | select(.title=="Wonder Woman") 
-      | .showtimes[] 
-      | select(.theatre.name=="AMC Empire 25") 
-      | .dateTime
-    ' 
-
-Print the raw data by using the `-r` option:
-
-    cat demo-output.json | 
-    jq -r '.[] 
-      | select(.title=="Wonder Woman") 
-      | .showtimes[] 
-      | select(.theatre.name=="AMC Empire 25") 
+      | select(.theatre.id=="7503")
       | .dateTime
     ' 
 
 Output:
 
-    2017-08-21T10:20
-    2017-08-21T13:40
-    2017-08-21T17:00
-    2017-08-21T20:10
-    2017-08-21T23:15
+    "2017-08-21T10:20"
+    "2017-08-21T13:40"
+    "2017-08-21T17:00"
+    "2017-08-21T20:10"
+    "2017-08-21T23:15"
