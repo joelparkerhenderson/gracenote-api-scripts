@@ -4,6 +4,8 @@ This demo connects to the Gracenote API to get a list of movie showings.
 
 To start, please see the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
 
+This demo uses the Gracenote "OnConnect Data Delivery APIs".
+
 The API provides URIs that look like this:
 
     http://data.tmsapi.com/v1.1/movies/showings
@@ -95,41 +97,56 @@ One way to filter JSON and format it is to use the `jq` command.
 
 To learn `jq` please see https://stedolan.github.io/jq/
 
-For example, if we care most about showtims, and not about the movie content,
-then we can use the `jq` command to delete many of the JSON fields.
+These examples show how to filter the data various ways.
 
-Example:
+Filter by movie title:
 
     cat demo-output.json | 
-    jq 'del(.[] | 
-    	.advisories,
-    	.animation,
-    	.audience,
-    	.descriptionLang,
-    	.directors,
-    	.entityType,
-    	.genres,
-    	.longDescription,
-    	.officialUrl,
-    	.preferredImage,
-    	.qualityRating,
-    	.ratings,
-    	.releaseDate,
-    	.releaseYear,
-    	.runTime,
-    	.shortDescription,
-    	.subType,
-    	.titleLang,
-    	.topCast,
-		.showtimes[].barg,
-		.showtimes[].quals,
-		.showtimes[].ticketURI
-    	)'
+    jq '.[] | 
+      select(.title=="Wonder Woman")
+    '
 
-To see the result, see the file `demo-output-with-filtering.json`.
+Filter to get the showtimes list:
 
-The filtering saves approximately half the data size.
+    cat demo-output.json | 
+    jq '.[] 
+      | select(.title=="Wonder Woman") 
+      | .showtimes[] 
+    ' 
 
+Filter by theatre id:
 
+    cat demo-output.json | 
+    jq -r '.[] 
+      | select(.title=="Wonder Woman") 
+      | .showtimes[] 
+      | select(.theatre.id=="7503") 
+    ' 
 
+Filter to get the dateTime entries:
 
+    cat demo-output.json | 
+    jq -r '.[] 
+      | select(.title=="Wonder Woman") 
+      | .showtimes[] 
+      | select(.theatre.name=="AMC Empire 25") 
+      | .dateTime
+    ' 
+
+Print the raw data by using the `-r` option:
+
+    cat demo-output.json | 
+    jq -r '.[] 
+      | select(.title=="Wonder Woman") 
+      | .showtimes[] 
+      | select(.theatre.name=="AMC Empire 25") 
+      | .dateTime
+    ' 
+
+Output:
+
+    2017-08-21T10:20
+    2017-08-21T13:40
+    2017-08-21T17:00
+    2017-08-21T20:10
+    2017-08-21T23:15
