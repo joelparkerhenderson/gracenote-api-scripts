@@ -95,8 +95,7 @@ Example to filter by movie title and theatre id, and print just the date-time en
       | select(.title=="Wonder Woman") 
       | .showtimes[] 
       | select(.theatre.id=="7503")
-      | .dateTime
-    ' 
+      | .dateTime' 
 
 Output:
 
