@@ -1,0 +1,46 @@
+#!/bin/sh
+
+## 
+# Gracenote API script to get theatre id by name and location
+#
+# Syntax:
+#
+#     $ gracenote-get-theatre-id-by-name-and-location <name> <latitude> <longitude> [radius] [units]
+#
+# Example:
+#
+#     $ export GRACENOTE_API_KEY=123456679
+#     $ gracenote-get-theatres-by-location "AMC Empire 25" 40.7527 -73.9772
+#
+# Defaults:
+#
+#    * `radius` is `1`.
+#
+#    * `units` is `km` a.k.a. kilometers.
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-theaters-by-location
+#   * Version: 2.0.0
+#   * Created: 2017-08-22
+#   * Updated: 2017-08-24
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+name="$1"
+latitude="$2"
+longitude="$3"
+radius="${4:-1}"
+units="${5:-km}"
+
+curl -sSLG "http://data.tmsapi.com/v1.1/theatres" \
+  --data-urlencode "api_key=$GRACENOTE_API_KEY" \
+  --data-urlencode "lat=$latitude" \
+  --data-urlencode "lng=$longitude" \
+  --data-urlencode "radius=$radius" \
+  --data-urlencode "units=$units" |
+jq -r ".[] 
+  | select(.name==\"$name\") 
+  | .theatreId"
+
