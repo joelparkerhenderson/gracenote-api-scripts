@@ -1,0 +1,41 @@
+#!/bin/sh
+
+## 
+# Gracenote API script to get theatres by location
+#
+# Syntax:
+#
+#     $ gracenote-get-theatres-by-location <latitude> <longitude> [[radius] units]
+#
+# Example:
+#
+#     $ export GRACENOTE_API_KEY=123456679
+#     $ gracenote-get-theatres-by-location 40.7527 -73.9772
+#
+# Defaults:
+#
+#    * `radius` is `1`.
+#
+#    * `units` is `km` a.k.a. kilometers.
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-theaters-by-location
+#   * Version: 2.0.0
+#   * Created: 2017-08-22
+#   * Updated: 2017-08-24
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+latitude="$1"
+longitude="$2"
+radius="${3:-1}"
+units="${4:-km}"
+
+curl -sSLG "http://data.tmsapi.com/v1.1/theatres" \
+  --data-urlencode "api_key=$GRACENOTE_API_KEY" \
+  --data-urlencode "lat=$latitude" \
+  --data-urlencode "lng=$longitude" \
+  --data-urlencode "radius=$radius" \
+  --data-urlencode "units=$units"
