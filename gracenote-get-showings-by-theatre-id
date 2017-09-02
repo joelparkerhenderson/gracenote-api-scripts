@@ -1,0 +1,38 @@
+#!/bin/sh
+
+## 
+# Gracenote API script to get theatre showings
+#
+# Syntax:
+#
+#     gracenote-get-showings-by-theatre-id <theatre id> [[start date] number of days]
+#
+# Example:
+#
+#     $ export GRACENOTE_API_KEY=123456679
+#     $ gracenote-get-showings-by-theatre-id
+#
+# Defaults:
+#
+#   * `start date`: today
+#   * `number of days`: 1
+#
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-showings-by-theatre-id
+#   * Version: 3.0.0
+#   * Created: 2017-08-22
+#   * Updated: 2017-09-02
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+theatreId="$1"
+startDate="${2:-$(date '+%Y-%m-%d')}"
+numDays="${3:-1}"
+
+curl -sSLG "http://data.tmsapi.com/v1.1/theatres/$theatreId/showings" \
+  --data-urlencode "api_key=$GRACENOTE_API_KEY" \
+  --data-urlencode "startDate=$startDate" \
+  --data-urlencode "numDays=$numDays"

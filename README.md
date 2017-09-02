@@ -1,4 +1,4 @@
-# Demo of the Gracenote API to get movies and showings
+# Demo of the Gracenote API to get theatres, movies, showings
 
 This demo connects to the Gracenote API to get a list of movie showings.
 
@@ -88,10 +88,10 @@ One way to filter JSON and format it is to use the `jq` command.
 
 To learn `jq` please see https://stedolan.github.io/jq/
 
-Example to filter by movie title and theatre id, and print just the date-time entries:
+Example to filter by movie title and theatre id, and print just the raw date-time entries:
 
     cat demo-output.json | 
-    jq '.[] 
+    jq -r '.[] 
       | select(.title=="Wonder Woman") 
       | .showtimes[] 
       | select(.theatre.id=="7503")
@@ -99,8 +99,18 @@ Example to filter by movie title and theatre id, and print just the date-time en
 
 Output:
 
-    "2017-08-21T10:20"
-    "2017-08-21T13:40"
-    "2017-08-21T17:00"
-    "2017-08-21T20:10"
-    "2017-08-21T23:15"
+    2017-08-21T10:20
+    2017-08-21T13:40
+    2017-08-21T17:00
+    2017-08-21T20:10
+    2017-08-21T23:15
+
+
+## Tracking
+
+  * Package: demo_gracenote_api_theatres_movies_showings
+  * Version: 2.0.0
+  * Created: 2017-08-22
+  * Updated: 2017-09-02
+  * License: GPL
+  * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)

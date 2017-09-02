@@ -5,7 +5,7 @@
 #
 # Syntax:
 #
-#     $ gracenote-get-theatres-by-location <latitude> <longitude> [[radius] units]
+#     gracenote-get-theatres-by-location [latitude longitude] [[radius] units]
 #
 # Example:
 #
@@ -14,22 +14,24 @@
 #
 # Defaults:
 #
+#    * `latitude`: $LATITUDE
+#    * `longitude`: $LONGITUDE
 #    * `radius` is `1`.
-#
 #    * `units` is `km` a.k.a. kilometers.
+#
 #
 # ## Tracking
 #
 #   * Command: gracenote-get-theaters-by-location
-#   * Version: 2.0.0
+#   * Version: 3.0.0
 #   * Created: 2017-08-22
-#   * Updated: 2017-08-24
+#   * Updated: 2017-09-02
 #   * License: GPL
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
-latitude="$1"
-longitude="$2"
+latitude="${1:-$LATITUDE}"
+longitude="${2:-$LONGITUDE}"
 radius="${3:-1}"
 units="${4:-km}"
 
