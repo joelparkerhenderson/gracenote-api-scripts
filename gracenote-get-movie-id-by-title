@@ -1,0 +1,42 @@
+#!/bin/sh
+
+## 
+# Gracenote API script to get one movie id by title and location
+#
+# Syntax:
+#
+#     gracenote-get-movie-id-by-title <title> [start-date] [number-of-days] [<latitude> <longitude> [radius] [units]]
+#
+# Example:
+#
+#     $ export GRACENOTE_API_KEY=123456679
+#     $ gracenote-get-movie-id-by-title "spider-man"
+#
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-movie-id-by-title
+#   * Version: 3.0.0
+#   * Created: 2017-08-22
+#   * Updated: 2017-09-02
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+title="$1"
+startDate="${2:-$(date '+%Y-%m-%d')}"
+numDays="${3:-1}"
+latitude="${4:-$LATITUDE}"
+longitude="${5:-$LONGITUDE}"
+radius="${6:-1}"
+units="${7:-km}"
+
+curl -sSLG "http://data.tmsapi.com/v1.1/movies/showings" \
+  --data-urlencode "api_key=$GRACENOTE_API_KEY" \
+  --data-urlencode "startDate=$startDate" \
+  --data-urlencode "numDays=$numDays" \
+  --data-urlencode "lat=$latitude" \
+  --data-urlencode "lng=$longitude" \
+  --data-urlencode "radius=$radius" \
+  --data-urlencode "units=$units" |
+jq -r ".[] | select(.title==\"$title\") | .tmsId"
