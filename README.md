@@ -106,6 +106,42 @@ Output:
     2017-08-21T23:15
 
 
+## How to combine JSON files
+
+Suppose you have multiple files and you want to combine the data.
+
+file-1.json
+
+    [
+      {
+        "alpha": "bravo"
+      }
+    ]
+
+file-2.json
+
+    [
+      {
+        "charlie": "delta"
+      }
+    ]
+
+Example:
+
+    cat file-1.json file-2.json | jq -s '[.[][]]'
+
+Output:
+
+    [
+      {
+        "alpha": "bravo"
+      },
+      {
+        "charlie": "delta"
+      }
+    ]
+
+
 ## Tracking
 
   * Package: demo_gracenote_api_theatres_movies_showings
