@@ -144,9 +144,9 @@ Output:
 
 ## Tracking
 
-  * Package: demo_gracenote_api_theatres_movies_showings
-  * Version: 2.0.0
+  * Package: gracenote_api_scripts
+  * Version: 3.0.0
   * Created: 2017-08-22
-  * Updated: 2017-09-02
+  * Updated: 2017-09-05
   * License: GPL
   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
