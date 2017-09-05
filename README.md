@@ -1,10 +1,10 @@
-# Demo of the Gracenote API to get theatres, movies, showings
+# Gracenote API to get theatres, movies, showings
 
-This demo connects to the Gracenote API to get a list of movie showings.
+These scripts connect to the Gracenote API to get a list of movie showings.
 
 To start, please see the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
 
-This demo uses the Gracenote "OnConnect Data Delivery APIs".
+These scripts use the Gracenote "OnConnect Data Delivery APIs".
 
 The API provides URIs that look like this:
 
