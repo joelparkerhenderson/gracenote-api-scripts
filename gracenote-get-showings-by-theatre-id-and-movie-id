@@ -30,8 +30,8 @@
 
 theatreId="$1"
 movieId="$2"
-startDate="${2:-$(date '+%Y-%m-%d')}"
-numDays="${3:-1}"
+startDate="${3:-$(date '+%Y-%m-%d')}"
+numDays="${4:-1}"
 
 curl -sSLG "http://data.tmsapi.com/v1.1/theatres/$theatreId/showings" \
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
