@@ -12,7 +12,7 @@ These scripts use the Gracenote "OnConnect Data Delivery APIs".
 The API provides URIs that look like this:
 
     http://data.tmsapi.com/v1.1/movies/showings
-    ?api_key=tc7uqt2rvrygddhszep6zuvs
+    ?api_key=abcdefghijklmnops
     &zip=10017
     &startDate=2017-08-01
 
@@ -38,7 +38,7 @@ Verify that your API key works:
 
   1. Try the `curl` command or `wget` command.
 
-  2. Example: `curl 'http://data.tmsapi.com/v1.1/movies/showings?api_key=tc7uqt2rvrygddhszep6zuvs&zip=10017&startDate=2017-08-01'`
+  2. Example: `curl 'http://data.tmsapi.com/v1.1/movies/showings?api_key=abcdefghijklmnops&zip=10017&startDate=2017-08-01'`
 
   3. The demo output is JSON text of the showings.
 
