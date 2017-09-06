@@ -22,18 +22,29 @@
 # ## Tracking
 #
 #   * Command: gracenote-get-showings-by-theatre-id-and-movie-id-to-timestamps
-#   * Version: 3.0.0
+#   * Version: 3.1.0
 #   * Created: 2017-08-22
-#   * Updated: 2017-09-02
+#   * Updated: 2017-09-07
 #   * License: GPL
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
+## Start
+set -euf
+out() { printf %s\\n "$*" ; }
+err() { >&2 printf %s\\n "$*" ; }
+die() { >&2 printf %s\\n "$*" ; exit 1 ; }
+
+## Args
 theatreId="$1"
 movieId="$2"
 startDate="${2:-$(date '+%Y-%m-%d')}"
 numDays="${3:-1}"
 
+## Preflight
+[ -z ${GRACENOTE_API_KEY+x} ] && die "GRACENOTE_API_KEY missing"
+
+## Main
 curl -sSLG "http://data.tmsapi.com/v1.1/theatres/$theatreId/showings" \
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
   --data-urlencode "startDate=$startDate" \

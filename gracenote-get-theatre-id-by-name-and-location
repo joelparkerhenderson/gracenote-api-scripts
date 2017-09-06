@@ -22,19 +22,30 @@
 # ## Tracking
 #
 #   * Command: gracenote-get-theatre-id-by-name-and-location
-#   * Version: 3.0.0
+#   * Version: 3.1.0
 #   * Created: 2017-08-22
-#   * Updated: 2017-09-02
+#   * Updated: 2017-09-07
 #   * License: GPL
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
+## Start
+set -euf
+out() { printf %s\\n "$*" ; }
+err() { >&2 printf %s\\n "$*" ; }
+die() { >&2 printf %s\\n "$*" ; exit 1 ; }
+
+## Args
 name="$1"
 latitude="${2:-$LATITUDE}"
 longitude="${3:-$LONGITUDE}"
 radius="${4:-1}"
 units="${5:-km}"
 
+## Preflight
+[ -z ${GRACENOTE_API_KEY+x} ] && die "GRACENOTE_API_KEY missing"
+
+## Main
 curl -sSLG "http://data.tmsapi.com/v1.1/theatres" \
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
   --data-urlencode "lat=$latitude" \
