@@ -2,7 +2,10 @@
 
 These scripts connect to the Gracenote API to get a list of movie showings.
 
-To start, please see the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
+See the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
+
+
+## What is the Gracenote API?
 
 These scripts use the Gracenote "OnConnect Data Delivery APIs".
 
@@ -21,7 +24,7 @@ The URI is a typical RESTful method with these pieces:
   * Query string with the API key and filters.
 
 
-## Usage
+## How to get started?
 
 Get your own Gracenote API key:
 
@@ -31,7 +34,7 @@ Get your own Gracenote API key:
 
   3. Obtain your own free API key for the free public plan.
 
-Optionally verify that your API key works:
+Verify that your API key works:
 
   1. Try the `curl` command or `wget` command.
 
@@ -39,38 +42,29 @@ Optionally verify that your API key works:
 
   3. The demo output is JSON text of the showings.
 
-Use the Ruby script:
 
-  1. Change the demo API key to your own API key.
-
-  2. Run the Ruby script: `ruby demo.rb`
-
-  3. The output is typical JSON text.
-
-To see example output, view the file `demo-output.json`, which we've formatted for readability.
-
-
-## Location
+## What is the location?
 
 The API needs the movies showings request to provide a location, 
 by using a U.S. zip (a.k.a. postal code) or latitude and longitude.
 
-This demo uses the location of New York City Grand Central Station,
-which is zip 10017. 
+Our examples use this location:
 
-You'll likely want to edit the script for your own location.
+  * Grand Central Station in New York City
+  * Street address: 89 E 42nd St, New York, NY 10017
+  * Postal code: 10017
+  * Latitude: 40.7527
+  * Longitude -73.9772
 
 
 ## Help
 
-If you run the ruby script and get an error about missing JSON:
+If you get error messages about "curl" missing:
 
-  * Do you have a Ruby JSON gem?
+  * Be sure you have the curl command installed.
 
-  * Try to install the json gem: `gem install json`
-
-  * Run the script again.
-
+  * Verify you can run this example command: `curl https://google.com`
+  
 If you get error messages about API rate limiting:
 
   * Are you trying to make more calls faster than the free public plan allows? 
@@ -79,67 +73,13 @@ If you get error messages about API rate limiting:
 
   * Try waiting a minute then try just 1 call.
 
+If you want to work with the JSON, such as filtering it:
+
+  * One way to handle JSON and format it is to use the `jq` command.
+
+  * To learn `jq` please see https://stedolan.github.io/jq/
+
 If you need more help, please open an issue and we'll take a look.
-
-
-## How to filter JSON
-
-One way to filter JSON and format it is to use the `jq` command.
-
-To learn `jq` please see https://stedolan.github.io/jq/
-
-Example to filter by movie title and theatre id, and print just the raw date-time entries:
-
-    cat demo-output.json | 
-    jq -r '.[] 
-      | select(.title=="Wonder Woman") 
-      | .showtimes[] 
-      | select(.theatre.id=="7503")
-      | .dateTime' 
-
-Output:
-
-    2017-08-21T10:20
-    2017-08-21T13:40
-    2017-08-21T17:00
-    2017-08-21T20:10
-    2017-08-21T23:15
-
-
-## How to combine JSON files
-
-Suppose you have multiple files and you want to combine the data.
-
-file-1.json
-
-    [
-      {
-        "alpha": "bravo"
-      }
-    ]
-
-file-2.json
-
-    [
-      {
-        "charlie": "delta"
-      }
-    ]
-
-Example:
-
-    cat file-1.json file-2.json | jq -s '[.[][]]'
-
-Output:
-
-    [
-      {
-        "alpha": "bravo"
-      },
-      {
-        "charlie": "delta"
-      }
-    ]
 
 
 ## Tracking
