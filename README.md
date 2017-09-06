@@ -85,8 +85,8 @@ If you need more help, please open an issue and we'll take a look.
 ## Tracking
 
   * Package: gracenote_api_scripts
-  * Version: 3.0.0
+  * Version: 3.1.0
   * Created: 2017-08-22
-  * Updated: 2017-09-05
+  * Updated: 2017-09-07
   * License: GPL
   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
