@@ -31,17 +31,13 @@
 ##
 
 set -euf
-source gracenote-functions
+source gracenote-helpers
 
 ## Args
 latitude="${1:-${LATITUDE:-}}"
 longitude="${2:-${LONGITUDE:-}}"
 radius="${3:-1}"
 units="${4:-km}"
-
-## Cmds
-CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
-JQ=${JQ:-jq}; cmd "$JQ" || die_cmd "$JQ"
 
 ## Preflight
 [ -z ${GRACENOTE_API_KEY+x} ] && die_var GRACENOTE_API_KEY

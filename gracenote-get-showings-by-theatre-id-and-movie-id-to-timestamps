@@ -29,17 +29,13 @@
 ##
 
 set -euf
-source gracenote-functions
+source gracenote-helpers
 
 ## Args
 theatreId="${1:-}"
 movieId="${2:-}"
 startDate="${2:-$(date '+%Y-%m-%d')}"
 numDays="${3:-1}"
-
-## Cmds
-CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
-JQ=${JQ:-jq}; cmd "$JQ" || die_cmd "$JQ"
 
 ## Preflight
 [ -z ${GRACENOTE_API_KEY+x} ] && die_var GRACENOTE_API_KEY
