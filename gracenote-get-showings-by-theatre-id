@@ -28,14 +28,8 @@
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
-## Start
 set -euf
-out() { printf %s\\n "$*" ; }
-err() { >&2 printf %s\\n "$*" ; }
-die() { >&2 printf %s\\n "$*" ; exit 1 ; }
-cmd() { command -v $1 >/dev/null 2>&1 ; }
-die_cmd() { die "Command needed: $1" ; }
-die_var() { die "Variable needed: $1" ; }
+source gracenote-functions
 
 ## Args
 theatreId="${1:-}"
