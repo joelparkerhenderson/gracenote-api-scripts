@@ -1,0 +1,47 @@
+#!/bin/sh
+
+## 
+# Gracenote API script to get movies by title
+#
+# Syntax:
+#
+#     gracenote-get-movies-by-title <title>
+#
+# Example:
+#
+#     $ export GRACENOTE_API_KEY=123456679
+#     $ gracenote-get-movies-by-title "Atomic Blonde"
+#
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-movies-by-title
+#   * Version: 3.1.0
+#   * Created: 2017-08-22
+#   * Updated: 2017-09-07
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+## Start
+set -euf
+out() { printf %s\\n "$*" ; }
+err() { >&2 printf %s\\n "$*" ; }
+die() { >&2 printf %s\\n "$*" ; exit 1 ; }
+cmd() { command -v $1 >/dev/null 2>&1 ; }
+
+## Args
+title="${1:-}"
+
+## Preflight
+[ -z ${GRACENOTE_API_KEY+x} ] && die "GRACENOTE_API_KEY needed"
+[ -z "$title" ] && die "title needed"
+cmd curl || die "curl command needed"
+cmd jq || die "jq command needed"
+
+## Main
+curl -sSLG "http://data.tmsapi.com/v1.1/programs/search" \
+  --data-urlencode "api_key=$GRACENOTE_API_KEY" \
+  --data-urlencode "entityType=movie" \
+  --data-urlencode "q=$title" \
+  --data-urlencode "queryFields=title"
