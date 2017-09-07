@@ -59,12 +59,14 @@ Our examples use this location:
 
 ## Help
 
-If you get error messages about "curl" missing:
+If you get error messages about a command missing, such as "curl" or "jq".
 
-  * Be sure you have the curl command installed.
+  * Be sure you have the command installed.
 
-  * Verify you can run this example command: `curl https://google.com`
-  
+  * Example for curl: `curl --help`
+
+  * Example for jq: `jq --help`
+
 If you get error messages about API rate limiting:
 
   * Are you trying to make more calls faster than the free public plan allows? 
@@ -85,7 +87,7 @@ If you need more help, please open an issue and we'll take a look.
 ## Tracking
 
   * Package: gracenote_api_scripts
-  * Version: 3.1.0
+  * Version: 3.2.0
   * Created: 2017-08-22
   * Updated: 2017-09-07
   * License: GPL

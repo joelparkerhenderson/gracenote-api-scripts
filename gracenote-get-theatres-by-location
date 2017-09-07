@@ -23,7 +23,7 @@
 # ## Tracking
 #
 #   * Command: gracenote-get-theaters-by-location
-#   * Version: 3.1.0
+#   * Version: 3.2.0
 #   * Created: 2017-08-22
 #   * Updated: 2017-09-07
 #   * License: GPL
@@ -36,19 +36,26 @@ out() { printf %s\\n "$*" ; }
 err() { >&2 printf %s\\n "$*" ; }
 die() { >&2 printf %s\\n "$*" ; exit 1 ; }
 cmd() { command -v $1 >/dev/null 2>&1 ; }
-
+die_cmd() { die "Command needed: $1" ; }
+die_var() { die "Variable needed: $1" ; }
+	    
 ## Args
-latitude="${1:-$LATITUDE}"
-longitude="${2:-$LONGITUDE}"
+latitude="${1:-${LATITUDE:-}}"
+longitude="${2:-${LONGITUDE:-}}"
 radius="${3:-1}"
 units="${4:-km}"
 
+## Cmds
+CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
+
 ## Preflight
-[ -z ${GRACENOTE_API_KEY+x} ] && die "GRACENOTE_API_KEY needs to be set"
-cmd curl || die "curl command needs to be installed"
+[ -z "$latitude" ] && die_var latitude
+[ -z "$longitude" ] && die_var longitude
+[ -z "$radius" ] && die_var radius
+[ -z "$units" ] && die_var units
 
 ## Main
-curl -sSLG "http://data.tmsapi.com/v1.1/theatres" \
+"$CURL" -sSLG "http://data.tmsapi.com/v1.1/theatres" \
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
   --data-urlencode "lat=$latitude" \
   --data-urlencode "lng=$longitude" \
