@@ -1,21 +1,32 @@
 #!/bin/sh
 
 ## 
-# Gracenote API script to get one movie id by title and location
+# Gracenote API script to get a movie id by title
 #
 # Syntax:
 #
-#     gracenote-get-movie-id-by-title <title> [start-date] [number-of-days] [<latitude> <longitude> [radius] [units]]
+#     gracenote-get-movie-ids-by-title <title>
 #
 # Example:
 #
 #     $ export GRACENOTE_API_KEY=123456679
-#     $ gracenote-get-movie-id-by-title "spider-man"
+#     $ gracenote-get-movie-ids-by-title "Atomic Blonde"
+#
+#
+# ## Details
+#
+# The title string is an exact match, not a partial match.
+# If you prefer partial matches, then you can use the API
+# to accomplish that.
+#
+# In case of multiple matches, this script outputs each id,
+# sorted by the movies' release dates, in ascending order.
+# So if you want the newest release, use the last output.
 #
 #
 # ## Tracking
 #
-#   * Command: gracenote-get-movie-id-by-title
+#   * Command: gracenote-get-movie-ids-by-title
 #   * Version: 3.1.0
 #   * Created: 2017-08-22
 #   * Updated: 2017-09-07
@@ -31,26 +42,22 @@ die() { >&2 printf %s\\n "$*" ; exit 1 ; }
 cmd() { command -v $1 >/dev/null 2>&1 ; }
 
 ## Args
-title="$1"
-startDate="${2:-$(date '+%Y-%m-%d')}"
-numDays="${3:-1}"
-latitude="${4:-$LATITUDE}"
-longitude="${5:-$LONGITUDE}"
-radius="${6:-1}"
-units="${7:-km}"
+title="${1:-}"
 
 ## Preflight
-[ -z ${GRACENOTE_API_KEY+x} ] && die "GRACENOTE_API_KEY missing"
-cmd curl || die "curl command needs to be installed"
-cmd jq || die "jq command needs to be installed"
+[ -z ${GRACENOTE_API_KEY+x} ] && die "GRACENOTE_API_KEY needed"
+[ -z "$title" ] && die "title needed"
+cmd curl || die "curl command needed"
+cmd jq || die "jq command needed"
 
 ## Main
-curl -sSLG "http://data.tmsapi.com/v1.1/movies/showings" \
+curl -sSLG "http://data.tmsapi.com/v1.1/programs/search" \
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
-  --data-urlencode "startDate=$startDate" \
-  --data-urlencode "numDays=$numDays" \
-  --data-urlencode "lat=$latitude" \
-  --data-urlencode "lng=$longitude" \
-  --data-urlencode "radius=$radius" \
-  --data-urlencode "units=$units" |
-jq -r ".[] | select(.title==\"$title\") | .tmsId"
+  --data-urlencode "entityType=movie" \
+  --data-urlencode "q=$title" \
+  --data-urlencode "queryFields=title" |
+  jq -r ".hits 
+  | map(select(.program.title==\"$title\"))
+  | sort_by(.program.releaseYear) 
+  | map(.program.tmsId)
+  | .[]"
