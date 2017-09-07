@@ -23,7 +23,7 @@
 ##
 
 set -euf
-source gracenote-helpers
+. gracenote-helpers
 
 ## Args
 title="${1:-}"

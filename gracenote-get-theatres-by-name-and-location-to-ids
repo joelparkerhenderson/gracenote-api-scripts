@@ -29,7 +29,7 @@
 ##
 
 set -euf
-source gracenote-helpers
+. gracenote-helpers
 
 ## Args
 name="${1:-}"

@@ -28,7 +28,7 @@
 ##
 
 set -euf
-source gracenote-helpers
+. gracenote-helpers
 
 ## Args
 theatreId="${1:}"
