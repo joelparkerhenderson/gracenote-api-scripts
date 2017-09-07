@@ -5,12 +5,12 @@
 #
 # Syntax:
 #
-#     gracenote-get-movies-by-title-to-id <title>
+#     gracenote-get-movies-by-title-to-ids <title>
 #
 # Example:
 #
 #     $ export GRACENOTE_API_KEY=123456679
-#     $ gracenote-get-movies-by-title-to-id "Atomic Blonde"
+#     $ gracenote-get-movies-by-title-to-ids "Atomic Blonde"
 #
 #
 # ## Details
@@ -26,7 +26,7 @@
 #
 # ## Tracking
 #
-#   * Command: gracenote-get-movies-by-title-to-id
+#   * Command: gracenote-get-movies-by-title-to-ids
 #   * Version: 3.2.0
 #   * Created: 2017-08-22
 #   * Updated: 2017-09-07
