@@ -40,7 +40,6 @@ radius="${3:-1}"
 units="${4:-km}"
 
 ## Preflight
-[ -z ${GRACENOTE_API_KEY+x} ] && die_var GRACENOTE_API_KEY
 [ -z "$latitude" ] && die_var latitude
 [ -z "$longitude" ] && die_var longitude
 [ -z "$radius" ] && die_var radius

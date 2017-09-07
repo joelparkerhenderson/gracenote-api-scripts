@@ -37,7 +37,6 @@ startDate="${2:-$(date '+%Y-%m-%d')}"
 numDays="${3:-1}"
 
 ## Preflight
-[ -z ${GRACENOTE_API_KEY+x} ] && die_var GRACENOTE_API_KEY
 [ -z "$theatreId" ] && die_var theatreId
 [ -z "$startDate" ] && die_var startDate
 [ -z "$numDays" ] && die_var numDays

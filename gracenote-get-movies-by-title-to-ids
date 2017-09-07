@@ -41,7 +41,6 @@ source gracenote-helpers
 title="${1:-}"
 
 ## Preflight
-[ -z ${GRACENOTE_API_KEY+x} ] && die_var GRACENOTE_API_KEY
 [ -z "$title" ] && die_var title
 
 ## Main
