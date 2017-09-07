@@ -1,27 +1,28 @@
 #!/bin/sh
 
 ## 
-# Gracenote API script to get theaters by name and location, and output the theaters' ids.
+# Gracenote API script to get theatres by location, and output the theatres' ids.
 #
 # Syntax:
 #
-#     gracenote-get-theaters-by-name-and-location-to-ids <name> [latitude longitude] [radius] [units]
+#     gracenote-get-theatres-by-location-to-ids [latitude longitude] [[radius] units]
 #
 # Example:
 #
 #     $ export GRACENOTE_API_KEY=123456679
-#     $ gracenote-get-theaters-by-name-and-location-to-ids "AMC Empire 25" 40.7527 -73.9772
+#     $ gracenote-get-theatres-by-location-to-ids 40.7527 -73.9772
 #
 # Defaults:
 #
 #    * `latitude`: $LATITUDE
 #    * `longitude`: $LONGITUDE
-#    * `radius`: 1
-#    * `units`: `km` a.k.a. kilometers.
+#    * `radius` is `1`.
+#    * `units` is `km` a.k.a. kilometers.
+#
 #
 # ## Tracking
 #
-#   * Command: gracenote-get-theaters-by-name-and-location-to-ids
+#   * Command: gracenote-get-theaters-by-location-to-ids
 #   * Version: 3.2.0
 #   * Created: 2017-08-22
 #   * Updated: 2017-09-07
@@ -37,21 +38,18 @@ die() { >&2 printf %s\\n "$*" ; exit 1 ; }
 cmd() { command -v $1 >/dev/null 2>&1 ; }
 die_cmd() { die "Command needed: $1" ; }
 die_var() { die "Variable needed: $1" ; }
-
+	    
 ## Args
-name="${1:-}"
-latitude="${2:-$LATITUDE}"
-longitude="${3:-$LONGITUDE}"
-radius="${4:-1}"
-units="${5:-km}"
+latitude="${1:-${LATITUDE:-}}"
+longitude="${2:-${LONGITUDE:-}}"
+radius="${3:-1}"
+units="${4:-km}"
 
 ## Cmds
 CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
 JQ=${JQ:-jq}; cmd "$JQ" || die_cmd "$JQ"
 
 ## Preflight
-[ -z ${GRACENOTE_API_KEY+x} ] && die_var GRACENOTE_API_KEY
-[ -z "$name" ] && die_var name
 [ -z "$latitude" ] && die_var latitude
 [ -z "$longitude" ] && die_var longitude
 [ -z "$radius" ] && die_var radius
@@ -65,5 +63,4 @@ JQ=${JQ:-jq}; cmd "$JQ" || die_cmd "$JQ"
   --data-urlencode "radius=$radius" \
   --data-urlencode "units=$units" |
 "$JQ" -r ".[] 
-  | select(.name==\"$name\") 
   | .theatreId"
