@@ -9,7 +9,6 @@
 #
 # Example:
 #
-#     $ export GRACENOTE_API_KEY=123456679
 #     $ gracenote-get-showings-by-theatre-id-and-movie-id 7503 1234
 #
 # Defaults:

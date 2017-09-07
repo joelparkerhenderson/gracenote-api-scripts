@@ -9,8 +9,7 @@
 #
 # Example:
 #
-#     $ export GRACENOTE_API_KEY=123456679
-#     $ gracenote-get-showings-by-theatre-id
+#     $ gracenote-get-showings-by-theatre-id 5703
 #
 # Defaults:
 #

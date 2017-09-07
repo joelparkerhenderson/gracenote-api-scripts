@@ -26,21 +26,17 @@ The URI is a typical RESTful method with these pieces:
 
 ## How to get started?
 
-Get your own Gracenote API key:
+Get your own Gracenote developer account and API key:
 
-  1. Go to Gracenote and create a developer account and app.
+    http://data.tmsapi.com/
 
-  2. Go to http://data.tmsapi.com/
+Verify that your API key works by trying curl:
 
-  3. Obtain your own free API key for the free public plan.
+    curl 'http://data.tmsapi.com/v1.1/movies/showings?api_key=12345678&zip=10017&startDate=2017-08-01'`
 
-Verify that your API key works:
+IMPORTANT: export your API key to your shell environment:
 
-  1. Try the `curl` command or `wget` command.
-
-  2. Example: `curl 'http://data.tmsapi.com/v1.1/movies/showings?api_key=abcdefghijklmnops&zip=10017&startDate=2017-08-01'`
-
-  3. The demo output is JSON text of the showings.
+    $ export GRACENOTE_API_KEY=12345678
 
 
 ## What is the location?
@@ -59,13 +55,19 @@ Our examples use this location:
 
 ## Help
 
-If you get error messages about a command missing, such as "curl" or "jq".
+If you get error messages about GRACENOTE_API_KEY needed:
+
+  * Be sure you have set your own key in your own shell environment.
+
+  * Example: `export GRACENOTE_API_KEY=12345678"
+
+If you get error messages about a command missing, such as "curl" or "jq":
 
   * Be sure you have the command installed.
 
-  * Example for curl: `curl --help`
+  * Example: `curl http://google.com`
 
-  * Example for jq: `jq --help`
+  * Example: `jq --help`
 
 If you get error messages about API rate limiting:
 

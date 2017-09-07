@@ -9,7 +9,6 @@
 #
 # Example:
 #
-#     $ export GRACENOTE_API_KEY=123456679
 #     $ gracenote-get-theaters-by-name-and-location-to-ids "AMC Empire 25" 40.7527 -73.9772
 #
 # Defaults:

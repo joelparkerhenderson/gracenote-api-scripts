@@ -9,7 +9,6 @@
 #
 # Example:
 #
-#     $ export GRACENOTE_API_KEY=123456679
 #     $ gracenote-get-movies-by-title-to-ids "Atomic Blonde"
 #
 #

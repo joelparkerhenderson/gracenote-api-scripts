@@ -9,7 +9,6 @@
 #
 # Example:
 #
-#     $ export GRACENOTE_API_KEY=123456679
 #     $ gracenote-get-theatres-by-location 40.7527 -73.9772
 #
 # Defaults:
