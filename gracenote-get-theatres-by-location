@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ## 
-# Gracenote API script to get theatres by location
+# Gracenote API script to get theatres by location.
 #
 # Syntax:
 #
@@ -47,6 +47,7 @@ units="${4:-km}"
 
 ## Cmds
 CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
+JQ=${JQ:-jq}; cmd "$JQ" || die_cmd "$JQ"
 
 ## Preflight
 [ -z "$latitude" ] && die_var latitude
@@ -60,5 +61,6 @@ CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
   --data-urlencode "lat=$latitude" \
   --data-urlencode "lng=$longitude" \
   --data-urlencode "radius=$radius" \
-  --data-urlencode "units=$units"
+  --data-urlencode "units=$units" |
+"$JQ" .
 

@@ -1,8 +1,7 @@
 #!/bin/sh
 
 ## 
-# Gracenote API script to get showings by theatre id and movie id,
-# and output raw timestamps
+# Gracenote API script to get showings by theatre id and movie id, and output raw timestamps.
 #
 # Syntax:
 #

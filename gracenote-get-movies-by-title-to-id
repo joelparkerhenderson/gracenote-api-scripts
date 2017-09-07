@@ -1,16 +1,16 @@
 #!/bin/sh
 
 ## 
-# Gracenote API script to get movie ids by title
+# Gracenote API script to get movies by title, and output each id.
 #
 # Syntax:
 #
-#     gracenote-get-movie-ids-by-title <title>
+#     gracenote-get-movies-by-title-to-id <title>
 #
 # Example:
 #
 #     $ export GRACENOTE_API_KEY=123456679
-#     $ gracenote-get-movie-ids-by-title "Atomic Blonde"
+#     $ gracenote-get-movies-by-title-to-id "Atomic Blonde"
 #
 #
 # ## Details
@@ -26,7 +26,7 @@
 #
 # ## Tracking
 #
-#   * Command: gracenote-get-movie-ids-by-title
+#   * Command: gracenote-get-movies-by-title-to-id
 #   * Version: 3.2.0
 #   * Created: 2017-08-22
 #   * Updated: 2017-09-07
