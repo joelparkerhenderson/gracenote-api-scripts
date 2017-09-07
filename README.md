@@ -59,7 +59,7 @@ If you get error messages about GRACENOTE_API_KEY needed:
 
   * Be sure you have set your own key in your own shell environment.
 
-  * Example: `export GRACENOTE_API_KEY=12345678"
+  * Example: `export GRACENOTE_API_KEY=12345678`
 
 If you get error messages about a command missing, such as "curl" or "jq":
 
