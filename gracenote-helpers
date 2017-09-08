@@ -9,3 +9,5 @@ CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
 JQ=${JQ:-jq}; cmd "$JQ" || die_cmd "$JQ"
 
 [ -z ${GRACENOTE_API_KEY+x} ] && die_var GRACENOTE_API_KEY
+
+true
