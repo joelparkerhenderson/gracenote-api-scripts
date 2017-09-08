@@ -31,7 +31,7 @@ set -euf
 . gracenote-helpers
 
 ## Args
-theatreId="${1:}"
+theatreId="${1:-}"
 movieId="${2:-}"
 startDate="${3:-$(date '+%Y-%m-%d')}"
 numDays="${4:-1}"
