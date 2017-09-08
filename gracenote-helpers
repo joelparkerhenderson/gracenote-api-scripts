@@ -1,3 +1,16 @@
+## 
+# Gracenote helpers for our other scripts.
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-movies-by-title
+#   * Version: 3.2.1
+#   * Created: 2017-08-22
+#   * Updated: 2017-09-08
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
 out() { printf %s\\n "$*" ; }
 err() { >&2 printf %s\\n "$*" ; }
 die() { >&2 printf %s\\n "$*" ; exit 1 ; }
