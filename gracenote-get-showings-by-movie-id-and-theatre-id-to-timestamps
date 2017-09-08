@@ -1,15 +1,15 @@
 #!/bin/sh
 
 ## 
-# Gracenote API script to get showings by theatre id and movie id.
+# Gracenote API script to get showings by theatre id and movie id, and output raw timestamps.
 #
 # Syntax:
 #
-#     gracenote-get-showings-by-theatre-id-and-movie-id <theatre id> <movie id> [[start date] number of days]
+#     gracenote-get-showings-by-movie-id-and-theatre-id-to-timestamps <theatre id> <movie id> [[start date] number of days]
 #
 # Example:
 #
-#     $ gracenote-get-showings-by-theatre-id-and-movie-id 7503 1234
+#     $ gracenote-get-showings-by-movie-id-and-theatre-id-to-timestamps 7503 1234
 #
 # Defaults:
 #
@@ -19,7 +19,7 @@
 #
 # ## Tracking
 #
-#   * Command: gracenote-get-showings-by-theatre-id-and-movie-id
+#   * Command: gracenote-get-showings-by-movie-id-and-theatre-id-to-timestamps
 #   * Version: 3.2.0
 #   * Created: 2017-08-22
 #   * Updated: 2017-09-07
@@ -31,14 +31,14 @@ set -euf
 . gracenote-helpers
 
 ## Args
-theatreId="${1:-}"
-movieId="${2:-}"
-startDate="${3:-$(date '+%Y-%m-%d')}"
-numDays="${4:-1}"
+movieId="${1:-}"
+theatreId="${2:-}"
+startDate="${2:-$(date '+%Y-%m-%d')}"
+numDays="${3:-1}"
 
 ## Preflight
-[ -z "$theatreId" ] && die_var theatreId
 [ -z "$movieId" ] && die_var movieId
+[ -z "$theatreId" ] && die_var theatreId
 [ -z "$startDate" ] && die_var startDate
 [ -z "$numDays" ] && die_var numDays
 
@@ -47,6 +47,7 @@ numDays="${4:-1}"
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
   --data-urlencode "startDate=$startDate" \
   --data-urlencode "numDays=$numDays" |
-"$JQ" ".[] 
+"$JQ" -r ".[] 
   | select(.tmsId==\"$movieId\") .showtimes 
-  | map(del(.theatre))"
+  | map(.dateTime) 
+  | .[]"
