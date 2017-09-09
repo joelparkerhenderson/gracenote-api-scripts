@@ -1,15 +1,15 @@
 #!/bin/sh
 
 ## 
-# Gracenote API script to get theaters by name and location.
+# Gracenote API script to get theatres by name and location.
 #
 # Syntax:
 #
-#     gracenote-get-theaters-by-name-and-location <name> [latitude longitude] [radius] [units]
+#     gracenote-get-theatres-by-name-and-location <name> [latitude longitude] [radius] [units]
 #
 # Example:
 #
-#     $ gracenote-get-theaters-by-name-and-location "AMC Empire 25" 40.7527 -73.9772
+#     $ gracenote-get-theatres-by-name-and-location "AMC Empire 25" 40.7527 -73.9772
 #
 # Defaults:
 #
@@ -20,7 +20,7 @@
 #
 # ## Tracking
 #
-#   * Command: gracenote-get-theaters-by-name-and-location-to-ids
+#   * Command: gracenote-get-theatres-by-name-and-location-to-ids
 #   * Version: 3.2.0
 #   * Created: 2017-08-22
 #   * Updated: 2017-09-07
