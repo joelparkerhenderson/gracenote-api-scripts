@@ -47,6 +47,4 @@ numDays="${4:-1}"
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
   --data-urlencode "startDate=$startDate" \
   --data-urlencode "numDays=$numDays" |
-"$JQ" ".[] 
-  | select(.tmsId==\"$movieId\") .showtimes 
-  | map(del(.theatre))"
+"$JQ" .
