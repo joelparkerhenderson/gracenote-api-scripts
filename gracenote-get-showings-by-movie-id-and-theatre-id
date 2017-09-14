@@ -20,9 +20,9 @@
 # ## Tracking
 #
 #   * Command: gracenote-get-showings-by-movie-id-and-theatre-id
-#   * Version: 3.2.0
+#   * Version: 3.3.0
 #   * Created: 2017-08-22
-#   * Updated: 2017-09-07
+#   * Updated: 2017-09-14
 #   * License: GPL
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
@@ -47,4 +47,5 @@ numDays="${4:-1}"
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
   --data-urlencode "startDate=$startDate" \
   --data-urlencode "numDays=$numDays" |
-"$JQ" .
+"$JQ" ".[] 
+  | select(.tmsId==\"$movieId\")"
