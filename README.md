@@ -1,5 +1,7 @@
 # Gracenote API to get theatres, movies, showings
 
+<img src="README.png" alt="Gracenote" width="300" height="88" />
+
 These scripts connect to the Gracenote API to get a list of movie showings.
 
 See the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
