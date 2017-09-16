@@ -6,6 +6,8 @@ These scripts connect to the Gracenote API to get information about theatres, mo
 
 The  API uses REST and JSON, and these scripts use the commands `curl` and `jq` to manage data.
 
+These scripts are NOT authored by Gracenote. These scripts are independent implementations of the Gracenote free public API. These scripts are good for introductory learning, simple demonstrations, and generally getting up to speed with the API. These scripts are not intended to be production quality.
+
 See the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
 
 
