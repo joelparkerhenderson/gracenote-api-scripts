@@ -2,7 +2,9 @@
 
 <img src="README.png" alt="Gracenote" width="300" height="88" />
 
-These scripts connect to the Gracenote API to get a list of movie showings.
+These scripts connect to the Gracenote API to get information about theatres, movies, showings, programs, celebrities, and the like.
+
+The  API uses REST and JSON, and these scripts use the commands `curl` and `jq` to manage data.
 
 See the [Gracenote Developer site and API Explorer tool](http://developer.tmsapi.com/io-docs)
 
