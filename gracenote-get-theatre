@@ -33,5 +33,5 @@ id="${1:-}"
 
 ## Main
 "$CURL" -sSLG "http://data.tmsapi.com/v1.1/theatres/$id" \
-  --data-urlencode "api_key=$GRACENOTE_API_KEY"
+  --data-urlencode "api_key=$GRACENOTE_API_KEY" |
 "$JQ" .
