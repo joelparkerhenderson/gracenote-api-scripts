@@ -45,11 +45,10 @@ units="${4:-km}"
 [ -z "$units" ] && die_var units
 
 ## Main
-"$CURL" -sSLG "http://data.tmsapi.com/v1.1/theatres" \
+"$CURL" -vSLG "http://data.tmsapi.com/v1.1/theatres" \
   --data-urlencode "api_key=$GRACENOTE_API_KEY" \
   --data-urlencode "lat=$latitude" \
   --data-urlencode "lng=$longitude" \
   --data-urlencode "radius=$radius" \
   --data-urlencode "units=$units" |
 "$JQ" .
-
