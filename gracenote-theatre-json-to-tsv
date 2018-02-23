@@ -1,1 +1,1 @@
-jq -r '[.theatreId, .name, .location.address.street, .location.address.city, .location.address.state, .location.address.postalCode, .location.geoCode.latitude, .location.geoCode.longitude] | @tsv'
+jq -r '[.theatreId, .name, .location.address.street, .location.address.city, .location.address.state, .location.address.postalCode, .location.geoCode.latitude, .location.geoCode.longitude, .location.telephone] | @tsv'
