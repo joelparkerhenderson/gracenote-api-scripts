@@ -1,0 +1,43 @@
+#!/bin/sh
+
+##
+# Gracenote API script to get theatres.
+#
+# Syntax:
+#
+#     gracenote-get-theatres-by-id-range [id start] [id stop]
+#
+# Example:
+#
+#     $ gracenote-get-theatres-by-id-range 1000 1005
+#
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-theatres
+#   * Version: 1.0.0
+#   * Created: 2019-07-31
+#   * Updated: 2019-08-02
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+set -euf
+. gracenote-helpers
+
+## Args
+id_start="${1:-1}"
+id_stop="${2:-12000}"
+
+## Preflight
+[ -z "$id_start" ] && die_var id_start
+[ -z "$id_stop" ] && die_var id_stop
+
+## Main
+id="$id_start"
+while [ $id -le "$id_stop" ]; do
+    "$CURL" -sSLG "http://data.tmsapi.com/v1.1/theatres/$id" \
+            --data-urlencode "api_key=$GRACENOTE_API_KEY" |
+        "$JQ"
+    id=$(( id + 1 ))
+done
