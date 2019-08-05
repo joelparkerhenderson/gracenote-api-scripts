@@ -1,0 +1,54 @@
+#!/bin/sh
+
+##
+# Gracenote API script to get programs by title, and output the programs' id.
+#
+# Syntax:
+#
+#     gracenote-get-programs-by-title-to-ids <title>
+#
+# Example:
+#
+#     $ gracenote-get-programs-by-title-to-ids "Atomic Blonde"
+#
+#
+# ## Details
+#
+# The title string is an exact match, not a partial match.
+# If you prefer partial matches, then you can use the API
+# to accomplish that.
+#
+# In case of multiple matches, this script outputs each id,
+# sorted by the programs' release dates, in ascending order.
+# So if you want the newest release, use the last output.
+#
+#
+# ## Tracking
+#
+#   * Command: gracenote-get-programs-by-title-to-ids
+#   * Version: 3.3.0
+#   * Created: 2017-08-22
+#   * Updated: 2017-09-14
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+set -euf
+. gracenote-helpers
+
+## Args
+title="${1:-}"
+
+## Preflight
+[ -z "$title" ] && die_var title
+
+## Main
+"$CURL" -sSLG "http://data.tmsapi.com/v1.1/programs/search" \
+  --data-urlencode "api_key=$GRACENOTE_API_KEY" \
+  --data-urlencode "q=$title" \
+  --data-urlencode "queryFields=title" |
+"$JQ" -r ".hits
+  | map(select(.program.title==\"$title\"))
+  | sort_by(.program.releaseYear)
+  | map(.program.tmsId)
+  | .[]"
