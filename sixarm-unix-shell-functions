@@ -1,0 +1,199 @@
+#!/bin/sh
+
+##
+# SixArm Unix shell functions
+#
+# We write lots of Unix shell functions for many kinds of scripts.
+# This file is our utility library of generally useful tiny functions.
+#
+# ## Known issues
+#
+# now(): on macOS and BSD, the default `date` command does not
+# currently support the nanosecond format, so the now() function
+# returns the letter "N" instead of nanoseconds. This is fine for
+# our typical purposes. A good solution is to install GNU date.
+#
+# ## Tracking
+#
+#   * Package: sixarm-unix-shell-functions
+#   * Version: 6.12.0
+#   * Created: 2017-08-22T00:00:00Z
+#   * Updated: 2021-04-30T02:49:22Z
+#   * License: GPL-2.0-only
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+##
+# Input/output helpers
+##
+
+# out: print output message to stdout
+out() { printf %s\\n "$*" ; }
+
+# err: print error message to stderr
+err() { >&2 printf %s\\n "$*" ; }
+
+# die: print error message to stderr, then exit with error code 1
+die() { >&2 printf %s\\n "$*" ; exit 1 ; }
+
+# big: print a big banner to stdout, good for human readability
+big() { printf \\n###\\n#\\n#\ %s\\n#\\n###\\n\\n "$*" ; }
+
+# log: print the current datestamp, the process id, and a message
+log() { printf '%s %s %s\n' "$( now )" $$ "$*" ; }
+
+# zid: generate a 32-bit secure random lowercase hex identifier
+zid() { hexdump -n 16 -v -e '16/1 "%02x" "\n"' /dev/random ; }
+
+# ask: prompt the user for a line of input, then return a trimmed string
+ask() { read x ; echo "$x" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' ; }
+
+##
+# Die helpers
+##
+
+# die_cmd: print error message that a command is needed, then exit
+die_cmd() { die "Command needed: $1" ; }
+
+# die_var: print error message that a variable is needed, then exit
+die_var() { die "Variable needed: $1" ; }
+
+##
+# Directory helpers
+##
+
+# pushdx: pushd with silencer
+pushdx() { command pushd "$@" > /dev/null ; }
+
+# popdx: popd with silencer
+popdx() { command popd "$@" > /dev/null ; }
+
+##
+# Time helpers
+##
+
+# now: get the current datetime using ISO standard format.
+now() { date -u "+%Y-%m-%dT%H:%M:%S.%N+00:00" "$@" ; }
+
+# sec: get the current time in Unix seconds.
+sec() { date "+%s" ; }
+
+# age: get the age of a given time in Unix secords.
+age() { printf %s\\n "$(( $(date "+%s") - $1 ))"; }
+
+# newer: is the age of a given time newer than a given number of seconds?
+newer() { [ "$(( $(date "+%s") - $1 ))" -lt "$2" ]; }
+
+# older: is the age of a given time older than a given number of seconds?
+older() { [ "$(( $(date "+%s") - $1 ))" -gt "$2" ]; }
+
+##
+# Number helpers
+##
+
+# int: convert a number string to an integer number string.
+int() { awk '{ print int($1) }' ; }
+
+# sum: print the sum of numbers
+sum() { awk '{for(i=1; i<=NF; i++) sum+=$i; } END {print sum}' ; }
+
+##
+# Validation helpers
+##
+
+# cmd: return true iff a command exists
+cmd() { command -v "$1" >/dev/null 2>&1 ; }
+
+##
+# Extensibility helpers
+##
+
+# dot_all: source all the executable files in a given directory and subdirectories
+dot_all() { find "${1:-.}" -type f \( -perm -u=x -o -perm -g=x -o -perm -o=x \) -exec test -x {} \; -exec . {} \; ; }
+
+# run_all: run all the executable commands in a given directory and subdirectories
+run_all() { find "${1:-.}" -type f \( -perm -u=x -o -perm -g=x -o -perm -o=x \) -exec test -x {} \; -exec {} \; ; }
+
+# sh_all: shell all the executable commands in a given directory and subdirectories
+sh_all() { find "${1:-.}" -type f \( -perm -u=x -o -perm -g=x -o -perm -o=x \) -exec test -x {} \; -print0 | xargs -0I{} -n1 sh -c "{}" ; }
+
+# rm_all: remove all files in a given directory and subdirectories-- use with caution
+rm_all() { find "${1:-.}" -type f -exec rm {} \; ; }
+
+##
+# Array helpers
+##
+
+# array_i: get the array item at index `i`.
+array_i() { [ $# == 3 ] && awk -F "$2" "{print \$$3}" <<< "$1" || awk "{print \$$2}" <<< "$1" ; }
+
+# array_n: get the array number of fields a.k.a. length a.k.a. size.
+array_n() { [ $# == 2 ] && awk -F "$2" "{print NF}"   <<< "$1" || awk "{print NF}" <<< "$1" ; }
+
+##
+# Assert helpers
+##
+
+# Assert a test utility command succeeds.
+assert_test() { test "$1" "$2" || err assert_test "$@" ; }
+
+# Assert an item is empty.
+assert_empty() { [ -z "$1" ] || err assert_empty "$@" ; }
+
+# Assert an item is equal to another item.
+assert_equal() { [ "$1" = "$2" ] || err assert_equal "$@" ; }
+
+# Assert an item matches a regular expression.
+assert_match() { [[ "$2" =~ $1 ]] || err assert_match "$@" ; }
+
+##
+# Home helpers
+##
+
+# Directory for log files (analogous to system /var/log).
+log_home() { out "${LOG_HOME:-${XDG_LOG_HOME:-$HOME/.log}}" ; }
+
+# Directory for temporary files (analogous to system /tmp).
+temp_home() { out "${TEMP_HOME:-${XDG_LOG_HOME:-$HOME/.temp}}" ; }
+
+# Directory for data files (analogous to system /usr/share).
+data_home() { out "${DATA_HOME:-${XDG_DATA_HOME:-$HOME/.local/share}}" ; }
+
+# Directory for cache files (analogous to system /var/cache).
+cache_home() { out "${CACHE_HOME:-${XDG_CACHE_HOME:-$HOME/.cache}}" ; }
+
+# Directory for configuration files (analogous to system /etc).
+config_home() { out "${CONFIG_HOME:-${XDG_CONFIG_HOME:-$HOME/.config}}" ; }
+
+# Directory for runtime files such as sockets, named pipes, etc.
+runtime_home() { out "${RUNTIME_HOME:-${XDG_RUNTIME_HOME:-$HOME/.runtime}}" ; }
+
+##
+# Make temp helpers
+##
+
+# Make a temporary directory path
+mktemp_dir() { x=$(mktemp -d -t "${1:-$(zid)}") ; trap '{ rm -rf "$x"; }' EXIT ; out "$x" ; }
+
+# Make a temporary file path
+mktemp_file() { x=$(mktemp -t "${1:-$(zid)}") ; trap '{ rm -f "$x"; }' EXIT ; out "$x" ; }
+
+##
+# Media helpers
+##
+
+# Get a file's media type a.k.a. mime type such as "text/plain"
+media_type() { file --brief --mime "$1" ; }
+
+# Get a file's media type type a.k.a. mime type such as "text"
+media_type_type() { file --brief --mime "$1" | sed 's#/.*##' ; }
+
+# Get a file's media type subtype a.k.a. mime type such as "plain"
+media_type_subtype() { file --brief --mime "$1" | sed 's#^[^/]*/##; s#;.*##' ; }
+
+##
+# Content helpers
+##
+
+# File ends with newline?
+file_ends_with_newline() { test $(tail -c1 "$1" | wc -l) -gt 0 ; }
